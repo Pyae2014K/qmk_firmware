@@ -1,0 +1,15 @@
+name: Build QMK Firmware
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup QMK
+        uses: qmk/qmk-action@v1
+        with:
+          keyboard: pyae2014k
+          keymap: default

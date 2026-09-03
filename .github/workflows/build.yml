@@ -8,8 +8,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Setup QMK
-        uses: qmk/qmk-action@v1
+      - name: Install QMK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi
+          pip install qmk
+          qmk setup -H ~/qmk_firmware -y
+          
+      - name: Copy keyboard files
+        run: |
+          cp -r keyboards/pyae2014k ~/qmk_firmware/keyboards/
+          
+      - name: Compile
+        run: |
+          cd ~/qmk_firmware
+          make pyae2014k:default
+          
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
         with:
-          keyboard: pyae2014k
-          keymap: default
+          name: firmware
+          path: ~/qmk_firmware/*.uf2

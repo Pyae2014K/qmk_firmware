@@ -6,13 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Install QMK
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi
-          pip install qmk
+          sudo apt-get install -y gcc-arm-none-eabi avr-libc gcc-avr avrdude dfu-programmer dfu-util dos2unix make
+          pip install qmk --break-system-packages
           qmk setup -H ~/qmk_firmware -y
           
       - name: Copy keyboard files
@@ -23,10 +23,10 @@ jobs:
         run: |
           cd ~/qmk_firmware
           make pyae2014k:default
-
-      - name: Find firmware
-        run: find /home/runner -name "*.uf2" 2>/dev/null
           
+      - name: Find all build files
+        run: find /home/runner/qmk_firmware -name "*.bin" -o -name "*.hex" -o -name "*.uf2" 2>/dev/null
+
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:

@@ -18,19 +18,18 @@ jobs:
       - name: Copy keyboard files
         run: |
           cp -r pyae2014k ~/qmk_firmware/keyboards/
+          ls ~/qmk_firmware/keyboards/pyae2014k/
           
       - name: Compile
         run: |
           cd ~/qmk_firmware
-          make pyae2014k:default 2>&1
-          ls -la *.uf2 || echo "No uf2 found in root"
-          ls -la .build/ || echo "No .build directory"
-          
-      - name: Find all build files
-        run: find /home/runner/qmk_firmware -name "*.bin" -o -name "*.hex" -o -name "*.uf2" 2>/dev/null
+          qmk compile -kb pyae2014k -km default 2>&1
+
+      - name: Find firmware
+        run: find /home/runner -name "*.uf2" 2>/dev/null
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: /home/runner/qmk_firmware/*.uf2
+          path: /home/runner/**/*.uf2

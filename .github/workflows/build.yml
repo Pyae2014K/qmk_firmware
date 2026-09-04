@@ -22,7 +22,9 @@ jobs:
       - name: Compile
         run: |
           cd ~/qmk_firmware
-          make pyae2014k:default
+          make pyae2014k:default 2>&1
+          ls -la *.uf2 || echo "No uf2 found in root"
+          ls -la .build/ || echo "No .build directory"
           
       - name: Find all build files
         run: find /home/runner/qmk_firmware -name "*.bin" -o -name "*.hex" -o -name "*.uf2" 2>/dev/null

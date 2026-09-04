@@ -28,4 +28,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: ~/qmk_firmware/*.uf2
+          path: /home/runner/qmk_firmware/*.uf2

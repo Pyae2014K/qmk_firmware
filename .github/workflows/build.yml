@@ -17,7 +17,7 @@ jobs:
           
       - name: Copy keyboard files
         run: |
-          cp -r keyboards/pyae2014k ~/qmk_firmware/keyboards/
+          cp -r pyae2014k ~/qmk_firmware/keyboards/
           
       - name: Compile
         run: |

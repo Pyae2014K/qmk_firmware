@@ -17,8 +17,9 @@ jobs:
           
       - name: Copy keyboard files
         run: |
-          cp -r pyae2014k ~/qmk_firmware/keyboards/
-          ls ~/qmk_firmware/keyboards/pyae2014k/
+          ls $GITHUB_WORKSPACE
+          cp -r $GITHUB_WORKSPACE/pyae2014k ~/qmk_firmware/keyboards/
+          ls ~/qmk_firmware/keyboards/ | grep pyae
           
       - name: Compile
         run: |

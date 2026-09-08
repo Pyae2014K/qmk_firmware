@@ -1,34 +1,34 @@
 name: Build QMK Firmware
-
+ 
 on: [push]
-
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+ 
       - name: Install QMK
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-arm-none-eabi avr-libc gcc-avr avrdude dfu-programmer dfu-util dos2unix make
           pip install qmk --break-system-packages
           qmk setup -H ~/qmk_firmware -y
-          
+ 
       - name: Copy keyboard files
         run: |
           ls $GITHUB_WORKSPACE
           cp -r $GITHUB_WORKSPACE/pyae2014k ~/qmk_firmware/keyboards/
           ls ~/qmk_firmware/keyboards/ | grep pyae
-          
+ 
       - name: Compile
         run: |
           cd ~/qmk_firmware
           qmk compile -kb pyae2014k -km default 2>&1
-
+ 
       - name: Find firmware
         run: find /home/runner -name "*.uf2" 2>/dev/null
-
+ 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:

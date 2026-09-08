@@ -1,5 +1,6 @@
 {
     "keyboard_name": "Pyae2014K",
+    "manufacturer": "Pyae Kyaw",
     "processor": "RP2040",
     "bootloader": "rp2040",
     "board": "GENERIC_RP_RP2040",
@@ -35,4 +36,5 @@
             ]
         }
     }
+}
 }
